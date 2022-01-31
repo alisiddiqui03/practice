@@ -1,0 +1,266 @@
+//Insertion  .. Overflow
+#include <iostream>
+        using namespace std;
+int size=10;
+int nextSlot=4;
+
+int checkOveflow(int pos){
+    if(nextSlot>size){
+        return -1;
+    }
+    if(pos>nextSlot){
+        return -1;
+    }
+    return 1;
+}
+
+void insert(int value,int pos,int a[]){
+    int i=nextSlot;
+    while(i>pos){     //
+        a[i]=a[i-1];
+        i--;
+    }
+    a[pos]=value;
+    nextSlot++;
+}
+
+int main()
+{
+    int value,pos;
+    char choice;
+    int arr[size]={1,2,3,4};
+    for(int i=0;i<4;i++){
+    cout<<arr[i]<<endl;
+}
+    cout<<"Do you want to insert value?(Y/N)"<<endl;
+    cin>>choice;
+
+    while(choice=='Y' || choice=='y'){
+    cout<<"Enter index : ";
+    cin>>pos;
+    cout<<"Enter value : ";
+    cin>>value;
+
+
+    if(checkOveflow(pos)==1){
+    insert(value,pos,arr);
+
+    cout<<"Do you want to insert again?(Y/N)"<<endl;
+    cin>>choice;
+
+    }
+    else{
+        cout<<"OVERFLOW"<<endl;
+        cout<<"Do you want to insert again?(Y/N)"<<endl;
+        cin>>choice;
+    }
+
+    }
+        cout<<"Final Array : "<<endl;
+    for(int i=0;i<nextSlot;i++){
+        cout<<arr[i]<<endl;
+    }
+    return 0;
+}
+
+//Deletion  .. Underflow
+#include <iostream>
+    using namespace std;
+    int checkUnderflow(int index,int n){
+        if(index<0){
+            return -1;
+        }
+        if(index>n){
+            return 0;
+        }
+
+        return 1;
+    }
+int main(){
+      int size=7,i,index;
+      int arr[size]={10,20,30,40,50,60,70};
+      int n=7;
+      for(i=0;i<n;i++){
+        cout<<arr[i]<<endl;
+      }
+
+    cout<<"Type index to delete it's value"<<endl;
+    cin>>index;
+
+    if(checkUnderflow(index,n)==1){
+
+    for(i=index;i<n;i++){
+        arr[i]=arr[i+1];
+    }
+    n--;
+    for(i=0;i<n;i++){
+        cout<<arr[i]<<endl;
+      }
+    }
+    else if(checkUnderflow(index,n)==-1){
+        cout<<"Underflow!!!"<<endl;
+    }
+    else{
+        cout<<"Type valid Index!"<<endl;
+    }
+        return 0;
+    }
+
+//Linear Search
+#include<iostream>
+using namespace std;
+
+int main(){
+    int size= 10, i,value,index;
+    char choice;
+    int arr[size]={33,5,7,4,3,7,90,42,24,33};
+    cout<<"Values Available :- "<<endl;
+    for(i=0;i<size;i++){
+        cout<<arr[i]<<endl;
+
+    }
+
+    cout<<"Are you searching for a number?(Y/N)"<<endl;
+    cin>>choice;
+
+    while(choice=='y'||choice =='Y'){
+          cout<<"Enter the value you want to know index of :"<<endl;
+          cin>>value;
+            for(i=0;i<size;i++){
+                if(arr[i]==value){
+                cout<<"The index of "<<arr[i]<<" is : "<<i<<endl<<endl;
+                }
+            }
+      cout<<"Do you want to search again? (Y/N)"<<endl;
+      cin>>choice;
+    }
+
+return 0;
+}
+
+///Binary Search
+int binarySearch(int arr[],int left,int right,int value){
+    int mid,j=0;
+    while(left<=right)
+    {
+        mid=(left+right)/2;
+        if(arr[mid]==value){
+            j++;
+        }
+        if(arr[mid]<value){
+            left=mid+1;
+            j++;
+        }
+        else{
+            right=mid-1;
+            j++;
+        }
+    }
+    return j;
+}
+
+///All Sorting methods.
+#include <iostream>
+#include <fstream>
+int i,j,temp;
+using namespace std;
+void Sort(int arr[],int n)
+{
+    int i,j,temp,pos_min;
+    cout<<"\nSorting through bubble sort : "<<endl;
+    for(i=0; i<n-1; i++)
+    {
+        for(j=0; j<n-i-1; j++)
+        {
+            if(arr[j]>arr[j+1])
+            {
+                temp=arr[j];
+                arr[j]=arr[j+1];
+                arr[j+1]=temp;
+            }
+        }
+    }
+
+    for(i=0; i<n; i++)
+    {
+        cout<<arr[i]<<endl;
+    }
+    cout<<endl;
+    /*bubble sort ends*/
+
+    cout<<"Sorting through selection sort : "<<endl;
+    for(i=0; i<n-1; i++)
+    {
+        pos_min=i;
+        for(j=i+1; j<n; j++)
+        {
+            if(arr[j]<arr[pos_min])
+            {
+                pos_min=j;
+            }
+
+        }
+        if(pos_min!=i)
+        {
+            temp=arr[i];
+            arr[i]=arr[pos_min];
+            arr[pos_min]=temp;
+        }
+    }
+    for(i=0; i<n; i++)
+    {
+        cout<<arr[i]<<endl;
+    }
+    cout<<endl;
+    /*selection sort ends*/
+
+
+    cout<<"Sorting through insertion sort : "<<endl;
+    for(i=1; i<n; i++)
+    {
+        temp=arr[i];
+        j=i;
+        while(j>0 && temp<=arr[j-1])
+        {
+            arr[j]=arr[j-1];
+            j=j-1;
+        }
+        arr[j]=temp;
+    }
+
+    for(i=0; i<n; i++)
+    {
+        cout<<arr[i]<<endl;
+    }
+    cout<<endl;
+    /*insertion sort ends*/
+
+}
+
+int main()
+{
+    string filename("unsorted.txt");
+    int number,n=0,i;
+    int arr[]= {0};
+
+    ifstream input_file(filename);
+
+    cout<<"Received array"<<endl;
+    while (input_file >> arr[n])
+    {
+
+        cout << arr[n] << endl;
+        n++;
+    }
+    input_file.close();
+    Sort(arr,n);
+    ofstream MyFile("sorted.txt");
+    for(int x=0; x<n; x++)
+    {
+        MyFile<<arr[x]<<endl;
+    }
+    MyFile.close();
+
+
+    return 0;
+}
